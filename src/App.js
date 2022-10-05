@@ -3,10 +3,13 @@ import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 
 function App() {
+  const [user, setUser] = useState({});
+
   function handleCallbackResponse(response) {
     console.log("JWT token: " + response.credential);
     let userObject = jwt_decode(response.credential);
     console.log(userObject);
+    setUser(userObject);
   }
 
   useEffect(() => {
@@ -22,9 +25,18 @@ function App() {
     });
   }, []);
 
+  // If we have no user: show the sign in button
+  // If we have a user: show the log out button
+
   return (
     <div className="App">
       <div id="signInDiv"></div>
+      {user && (
+        <div>
+          <img src={user.picture} alt="Profile" />
+          <h3>{user.name}</h3>
+        </div>
+      )}
     </div>
   );
 }
