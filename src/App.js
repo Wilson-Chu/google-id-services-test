@@ -1,9 +1,12 @@
 import "./App.css";
 import { useEffect, useState } from "react";
+import jwt_decode from "jwt-decode";
 
 function App() {
   function handleCallbackResponse(response) {
     console.log("JWT token: " + response.credential);
+    let userObject = jwt_decode(response.credential);
+    console.log(userObject);
   }
 
   useEffect(() => {
